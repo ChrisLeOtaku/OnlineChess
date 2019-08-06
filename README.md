@@ -9,3 +9,6 @@ Feel free to further modify this game. Just be sure to update the version number
 One player hosts the game while the other connects as a client through the host's IP address and chosen port. Before the game starts, the client and host confirm that they are both running on the same version of the game. If they are, the game starts with the client controlling the white pieces, therefore going first, and the host controlling the black pieces.
 
 Players take turns moving pieces until one of the king pieces is captured. There are three ways the game can end: by winning/losing the game, by one player disconnecting, or by one player being dcaught cheating through an illegal move. If any of these conditions occur, the connection is cut, the player is notified of the outcome, and the game board is kept open until the player closes it.
+
+## Fork Specific Features
+Chat over Websockets, Chatbox for all messages (including debug messages/turn notifications), and User Input bar to send messages to opponent.
