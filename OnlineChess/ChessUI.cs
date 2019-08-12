@@ -25,13 +25,16 @@ namespace OnlineChess {
             GenerateButtonArray();
             this.stream = stream;
             this.game = new ChessModel(color);
-            if(color == "Black"){
+            listBox1.SelectionMode = SelectionMode.None;
+            if (color == "Black")
+            {
                 this.Text = "Chess - Host";
-                this.InfoLabel.Text = "Your opponent goes first";
+                this.listBox1.Items.Add("Your opponent goes first");
             }
-            else{
+            else
+            {
                 this.Text = "Chess - Client";
-                this.InfoLabel.Text = "It's your turn first";
+                this.listBox1.Items.Add("It's your turn first");
             }
             UpdateBoard();
             if(!game.IsTurn()){
@@ -116,10 +119,21 @@ namespace OnlineChess {
                 }
                 game.MovePieces(p1, p2, opponentColor);
                 UpdateBoard();
-                InfoLabel.Text = game.GetGameInfo();
+                if (game.GetGameInfo().Contains("You can't select an empty space!"))
+                {
+                    listBox1.Items.Add("You can't select an empty space!");
+                }
+                else if (game.GetGameInfo().Contains("Choose where to move your piece"))
+                {
+                    listBox1.Items.Add("Choose where to move your piece!");
+                }
+                else
+                {
+                    listBox1.Items.Add(opponentColor + " moved " + game.GetGameInfo());
+                }
                 if(game.GetRecentMove() == "Invalid move!"){
-                    InfoLabel.Text = "Opponent cheated. You won!";
-                    WriteMessage("Cheated");
+                    listBox1.Items.Add("Opponent cheated. You won!");
+                    WriteMessage("!", "Cheated");
                     game.EndGame();
                     stream.Close();
                 }
@@ -132,12 +146,12 @@ namespace OnlineChess {
                 }
             }
             else if(dataStrings[0] == "Disconnected"){
-                InfoLabel.Text = "Opponent disconnected. You won!";
+                listBox1.Items.Add("Opponent disconnected. You won!");
                 game.EndGame();
                 stream.Close();
             }
             else if(dataStrings[0] == "Cheated"){
-                InfoLabel.Text = "You cheated. You lost the game!";
+                listBox1.Items.Add("You cheated. You lost the game!");
                 game.EndGame();
                 stream.Close();
             }
@@ -155,10 +169,20 @@ namespace OnlineChess {
                 String data = null;
                 Int32 i = await stream.ReadAsync(bytes, 0, bytes.Length);
                 data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                UpdateGame(data);
+                if(bytes[0] == 33)
+                {
+                    UpdateGame(data.Remove(0, 1));
+                    WaitForResponse();
+                }
+                else if (bytes[0] == 64)
+                {   
+                    listBox1.Items.Add(data.Remove(0,1));
+                    WaitForResponse();
+                }
             }
-            catch(ObjectDisposedException err){
-                InfoLabel.Text = "Opponent disconnected. You won!";
+            catch(ObjectDisposedException err) {
+                err.ToString();
+                listBox1.Items.Add("Opponent disconnected. You won!");
                 game.EndGame();
                 stream.Close();
             }
@@ -167,9 +191,13 @@ namespace OnlineChess {
         /*
          * Sends a string of data through the network stream
          */
-        private void WriteMessage(String data){
+        private void WriteMessage(String header, String data){
             Byte[] bytes = new Byte[256];
-            bytes = System.Text.Encoding.ASCII.GetBytes(data);
+            bytes = System.Text.Encoding.ASCII.GetBytes(header + data);
+            if (header == "@")
+            {
+                listBox1.Items.Add(data);
+            }
             stream.Write(bytes, 0, bytes.Length);
         }
 
@@ -178,9 +206,20 @@ namespace OnlineChess {
                 if(game.IsTurn() == true){
                     game.SelectPiece(button);
                     UpdateBoard();
-                    InfoLabel.Text = game.GetGameInfo();
-                    if(game.IsTurn() == false){
-                        WriteMessage("Moved," + game.GetRecentMove());
+                    if (game.GetGameInfo().Contains("You can't select an empty space!"))
+                    {
+                        listBox1.Items.Add("You can't select an empty space!");
+                    }
+                    else if (game.GetGameInfo().Contains("Choose where to move your piece"))
+                    {
+                        listBox1.Items.Add("Choose where to move your piece!");
+                    }
+                    else
+                    {
+                        listBox1.Items.Add(game.GetColor() + " moved " + game.GetGameInfo());
+                    }
+                    if (game.IsTurn() == false){
+                        WriteMessage("!", "Moved," + game.GetRecentMove());
 
                         if(game.IsGameOver() == false){
                             WaitForResponse();
@@ -191,7 +230,7 @@ namespace OnlineChess {
                     }
                 }
                 else{
-                    InfoLabel.Text = "It is not your turn";
+                    listBox1.Items.Add("It is not your turn");
                 }
             }
         }
@@ -517,6 +556,14 @@ namespace OnlineChess {
             this.buttons[61] = BoardButton61;
             this.buttons[62] = BoardButton62;
             this.buttons[63] = BoardButton63;
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text != null && textBox1.Text != " " && textBox1.Text != "")
+            {
+                WriteMessage("@", game.GetColor()+": "+textBox1.Text);
+            }
         }
     }
 }

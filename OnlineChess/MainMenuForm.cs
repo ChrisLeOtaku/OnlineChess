@@ -142,6 +142,7 @@ namespace OnlineChess{
                 InfoLabel.Text = "ArgumentNullException: " + err;
             }
             catch(SocketException err){
+                err.ToString();
                 InfoLabel.Text = "Could not connect to host";
             }
         }
