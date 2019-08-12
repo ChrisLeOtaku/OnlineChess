@@ -854,6 +854,7 @@
             // 
             // label2
             // 
+            this.label2.AccessibleName = "row2";
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(8, 137);
             this.label2.Name = "label2";
@@ -863,6 +864,7 @@
             // 
             // label3
             // 
+            this.label3.AccessibleName = "row1";
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(8, 56);
             this.label3.Name = "label3";
@@ -872,6 +874,7 @@
             // 
             // label4
             // 
+            this.label4.AccessibleName = "row3";
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(8, 219);
             this.label4.Name = "label4";
@@ -881,6 +884,7 @@
             // 
             // label5
             // 
+            this.label5.AccessibleName = "row4";
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(8, 300);
             this.label5.Name = "label5";
@@ -890,6 +894,7 @@
             // 
             // label6
             // 
+            this.label6.AccessibleName = "row7";
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(8, 544);
             this.label6.Name = "label6";
@@ -899,6 +904,7 @@
             // 
             // label7
             // 
+            this.label7.AccessibleName = "row8";
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 625);
             this.label7.Name = "label7";
@@ -908,6 +914,7 @@
             // 
             // label8
             // 
+            this.label8.AccessibleName = "row5";
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(8, 381);
             this.label8.Name = "label8";
@@ -917,6 +924,7 @@
             // 
             // label9
             // 
+            this.label9.AccessibleName = "row6";
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(8, 462);
             this.label9.Name = "label9";

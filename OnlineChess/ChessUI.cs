@@ -30,11 +30,47 @@ namespace OnlineChess {
             {
                 this.Text = "Chess - Host";
                 this.listBox1.Items.Add("Your opponent goes first");
+                //rows
+                this.label3.Text = "7";
+                this.label2.Text = "6";
+                this.label4.Text = "5";
+                this.label5.Text = "4";
+                this.label8.Text = "3";
+                this.label9.Text = "2";
+                this.label6.Text = "1";
+                this.label7.Text = "0";
+                //columns
+                this.label1.Text = "7";
+                this.label10.Text = "6";
+                this.label12.Text = "5";
+                this.label11.Text = "4";
+                this.label16.Text = "3";
+                this.label15.Text = "2";
+                this.label14.Text = "1";
+                this.label13.Text = "0";
             }
             else
             {
                 this.Text = "Chess - Client";
                 this.listBox1.Items.Add("It's your turn first");
+                //rows
+                this.label3.Text = "0";
+                this.label2.Text = "1";
+                this.label4.Text = "2";
+                this.label5.Text = "3";
+                this.label8.Text = "4";
+                this.label9.Text = "5";
+                this.label6.Text = "6";
+                this.label7.Text = "7";
+                //columns
+                this.label1.Text = "0";
+                this.label10.Text = "1";
+                this.label12.Text = "2";
+                this.label11.Text = "3";
+                this.label16.Text = "4";
+                this.label15.Text = "5";
+                this.label14.Text = "6";
+                this.label13.Text = "7";
             }
             UpdateBoard();
             if(!game.IsTurn()){
@@ -127,6 +163,10 @@ namespace OnlineChess {
                 {
                     listBox1.Items.Add("Choose where to move your piece!");
                 }
+                else if (game.GetGameInfo().Contains("Invalid move!"))
+                {
+                    listBox1.Items.Add("Invalid move!");
+                }
                 else
                 {
                     listBox1.Items.Add(opponentColor + " moved " + game.GetGameInfo());
@@ -213,6 +253,10 @@ namespace OnlineChess {
                     else if (game.GetGameInfo().Contains("Choose where to move your piece"))
                     {
                         listBox1.Items.Add("Choose where to move your piece!");
+                    }
+                    else if (game.GetGameInfo().Contains("Invalid move!"))
+                    {
+                        listBox1.Items.Add("Invalid move!");
                     }
                     else
                     {
